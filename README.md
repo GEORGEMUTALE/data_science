@@ -22,7 +22,7 @@
 - Support vector Machines (SVM)
 - k- Nearest Neighbor (KNN)
 - Random Forest
-- Deep Learning (CNN) - image classification
+- Deep Learning (CNN) - image classification, face recognition, video analysis
 
 .h5 is file with the trained model
 
@@ -63,3 +63,4 @@
 5. Epochs 20 # number of full passes through the dataset
 6. Number of classes
    - Number of output classes like crops(diseased, healthy)
+7. Create a convolutional Neural Network model

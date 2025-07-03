@@ -8,6 +8,10 @@ from tensorflow.keras.optimizers import Adam  # type: ignore
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping  # type: ignore
 import matplotlib.pyplot as plt
 
+#set random seeds for reproducibility
+tf.random.set_seed(42)
+np.random.seed(42)
+
 # Constants
 IMAGE_SIZE = (256, 256)
 BATCH_SIZE = 32
@@ -18,13 +22,13 @@ ANIMAL_CLASSES = 3  # Dog, Cat, Human (for filtering)
 # Paths
 # Should contain subfolders: crops/healthy, crops/diseased, animals/dog, animals/cat, animals/human
 DATASET_DIR = os.path.join(os.path.dirname(__file__), "dataset")
-MODEL_PATH = "agricure_model.h5"
+MODEL_PATH = "agricure_model.h5" #.h5 is more accurate than .h4, .h3
 
 
 def create_model(input_shape, num_classes):
     """Create a CNN model for classification"""
     model = Sequential([
-        Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),
+        Conv2D(32, (3, 3), activation='relu', input_shape=input_shape), #filters
         MaxPooling2D(2, 2),
         Conv2D(64, (3, 3), activation='relu'),
         MaxPooling2D(2, 2),
@@ -48,8 +52,8 @@ def train_crop_model():
     """Train the main crop disease detection model"""
     # Data generators with augmentation
     train_datagen = ImageDataGenerator(
-        rescale=1./255,
-        rotation_range=40,
+        rescale=1./255, # Normalise pixel values [0,1]
+        rotation_range=40, # the angle of view the image
         width_shift_range=0.2,
         height_shift_range=0.2,
         shear_range=0.2,
@@ -65,23 +69,23 @@ def train_crop_model():
         target_size=IMAGE_SIZE,
         batch_size=BATCH_SIZE,
         class_mode='categorical',
-        subset='training'
+        subset='training' #Load only the train subset
     )
 
     validation_generator = train_datagen.flow_from_directory(
         os.path.join(DATASET_DIR, "crops"),
         target_size=IMAGE_SIZE,
         batch_size=BATCH_SIZE,
-        class_mode='categorical',
-        subset='validation'
-    )
+        class_mode='categorical', #One-hot encoding
+        subset='validation' #Load only the validation subset
+    ) 
 
     # Create and train model
     model = create_model(IMAGE_SIZE + (3,), NUM_CLASSES)
 
     callbacks = [
-        ModelCheckpoint(MODEL_PATH, save_best_only=True),
-        EarlyStopping(patience=5, restore_best_weights=True)
+        ModelCheckpoint(MODEL_PATH, save_best_only=True), # save the best model with best validation
+        EarlyStopping(patience=5, restore_best_weights=True) # stop if no improvement
     ]
 
     history = model.fit(
