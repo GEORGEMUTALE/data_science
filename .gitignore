@@ -1,7 +1,20 @@
-# Ignore virtual environment
+# Ignore Python virtual environments
 venv/
+.env/
+.venv/
 
 # Ignore all HDF5 model files
-machine_learning/agricure_model.h5
-
 *.h5
+
+# Optional: Ignore typical Python cache & logs
+__pycache__/
+*.py[cod]
+*.log
+*.sqlite3
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
