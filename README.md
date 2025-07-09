@@ -64,3 +64,13 @@
 6. Number of classes
    - Number of output classes like crops(diseased, healthy)
 7. Create a convolutional Neural Network model
+
+# LINEAR REGRESSION
+Supervised learning which helps finding correlation btn variables and this can help one to predict the continous output variable based on the one or more predictor.
+
+it is used prediction forecasting, time series modeling
+
+##  Types of Regressions
+Linear regression
+ 1. Simple predict the dependent variable basing on an independent value
+ 2. Multiple used to estimate the relationship btn 2 or more independent variables and one dependent variable
